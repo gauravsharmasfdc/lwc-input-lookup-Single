@@ -1,0 +1,131 @@
+<template>
+  <div class="slds-form-element">
+    <label class="slds-form-element__label" for="combobox-id-1"
+      >Relate To</label
+    >
+    <div class="slds-form-element__control">
+      <div class="slds-combobox_container">
+        <div
+          class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          role="combobox"
+        >
+          <!--Input Section Start-->
+          <div
+            class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right input-box"
+            role="none"
+          >
+            <input
+              type="text"
+              class="slds-input slds-combobox__input"
+              id="combobox-id-1"
+              aria-autocomplete="list"
+              aria-controls="listbox-id-1"
+              autocomplete="off"
+              role="textbox"
+              placeholder="Search..."
+              onkeyup={handleSearchInput}
+              onclick={showListItems}
+            />
+            <span
+              class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right"
+            >
+              <lightning-icon
+                icon-name="utility:search"
+                size="x-small"
+              ></lightning-icon>
+            </span>
+          </div>
+
+          <!--Input Section End-->
+
+          <!--Selected Item Section Start-->
+          <div
+            class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right slds-hide selected-box"
+            role="none"
+          >
+            <input
+              type="text"
+              class="slds-input slds-combobox__input slds-combobox__input-value"
+              id="combobox-id-5"
+              style="padding-left: 0.75rem"
+              aria-controls="listbox-id-5"
+              autocomplete="off"
+              role="textbox"
+              placeholder="Select an Option…"
+              readonly
+              value={selectedItemName}
+            />
+            <button
+              class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+              title="Remove selected option"
+            >
+              <lightning-icon
+                icon-name="utility:close"
+                size="x-small"
+                data-id={selectedItemId}
+                onclick={handleRemoveItem}
+              ></lightning-icon>
+              <span class="slds-assistive-text">Remove selected option</span>
+            </button>
+          </div>
+          <!--Selected Item Section End-->
+
+          <!--Result Section Start-->
+          <div
+            id="listbox-id-1"
+            class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+            role="listbox"
+          >
+            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+              <template for:each={lookupItems} for:item="item">
+                <li
+                  key={item.id}
+                  role="presentation"
+                  class="slds-listbox__item"
+                >
+                  <template if:true={item.selected}>
+                    <div
+                      class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-has-focus"
+                      role="option"
+                      data-id={item.id}
+                      data-name={item.name}
+                      onclick={handleItemSelect}
+                    >
+                      <span class="slds-media__body">
+                        <span
+                          class="slds-listbox__option-text slds-listbox__option-text_entity"
+                          >{item.name}</span
+                        >
+                      </span>
+                    </div>
+                  </template>
+
+                  <template if:false={item.selected}>
+                    <div
+                      class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                      role="option"
+                      data-id={item.id}
+                      data-name={item.name}
+                      onclick={handleItemSelect}
+                    >
+                      <span class="slds-media__body">
+                        <span
+                          class="slds-listbox__option-text slds-listbox__option-text_entity"
+                          >{item.name}</span
+                        >
+                      </span>
+                    </div>
+                  </template>
+                </li>
+              </template>
+            </ul>
+          </div>
+
+          <!--Result Section End-->
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
